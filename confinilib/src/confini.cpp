@@ -21,17 +21,35 @@ char const * confini::version()
     return CONFINIVERSION;
 }
 
+/************************************************************************//**
+ * \brief     Default Constructor
+ * \exception -
+ * \author    Shadouw
+ ****************************************************************************/
 template<class T> confini::ConfIniFile<T>::ConfIniFile ()
 {
 
 }
 
+/************************************************************************//**
+ * \brief     Constructor to read a file
+ * \param     [in]  filename The name of the file to open
+ * \exception runtime_error
+ * \author    Shadouw
+ ****************************************************************************/
 template<class T> confini::ConfIniFile<T>::ConfIniFile ( STRINGTYPE filename ) :
     m_strFilename ( filename )
 {
     setfile ( m_strFilename );
 }
 
+/************************************************************************//**
+ * \brief     Checks a single line of the ini file
+ * \param     [in]  strLine
+ * \return    enum #ConfIniFileLineType
+ * \exception runtime_error
+ * \author    Shadouw
+ ****************************************************************************/
 template<class T> confini::ConfIniFileLineType confini::ConfIniFile<T>::checkline ( STRINGTYPE strLine )
 {
     boost::trim(strLine);
@@ -65,6 +83,13 @@ template<class T> confini::ConfIniFileLineType confini::ConfIniFile<T>::checklin
     }
 }
 
+/************************************************************************//**
+ * \brief     Splits a "Key = Value" pair into both parts.
+ * \param     [in]  strLine
+ * \return    pair<key,value>
+ * \exception runtime_error
+ * \author    Shadouw
+ ****************************************************************************/
 template<class T> typename confini::ConfIniFile<T>::VALUETYPE confini::ConfIniFile<T>::splitkeyvalue ( STRINGTYPE strLine )
 {
     int nPos = strLine.find('=');
@@ -79,6 +104,13 @@ template<class T> typename confini::ConfIniFile<T>::VALUETYPE confini::ConfIniFi
     return make_pair(strKey, strValue);
 }
 
+/************************************************************************//**
+ * \brief     Load filename into memory
+ * \param     [in]  filename
+ * \return    void
+ * \exception runtime_error
+ * \author    Shadouw
+ ****************************************************************************/
 template<class T> void confini::ConfIniFile<T>::setfile ( STRINGTYPE filename )
 {
     m_strFilename = filename;
@@ -119,6 +151,12 @@ template<class T> void confini::ConfIniFile<T>::setfile ( STRINGTYPE filename )
     }
 }
 
+/************************************************************************//**
+ * \brief     Saves changes back to file
+ * \return    void
+ * \exception -
+ * \author    Shadouw
+ ****************************************************************************/
 template<class T> void confini::ConfIniFile<T>::savefile ()
 {
     // First read entire file

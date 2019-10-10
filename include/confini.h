@@ -11,7 +11,17 @@
 namespace confini
 {
     char const * version();
-    enum ConfIniFileLineType { WHITESPACE, COMMENT, SECTION, KEYVALUE };
+
+    /************************************************************************//**
+     * \brief     Enumeration to identify single lines in ini file
+     * \author    Shadouw
+     ****************************************************************************/
+    enum ConfIniFileLineType {
+        WHITESPACE, /**< Whitespace only lines */
+        COMMENT,    /**< Comment lines */
+        SECTION,    /**< Section lines */
+        KEYVALUE    /**< Key=Value lines */
+    };
 
     template<class T> class ConfIniFile
     {
@@ -28,6 +38,14 @@ namespace confini
         void setfile ( STRINGTYPE filename );
         void savefile ();
 
+        /************************************************************************//**
+         * \brief     Access Sections/Keys/Values
+         * \param     [in]  strSection
+         * \param     [in]  strKey
+         * \return    It returns a reference to the value.
+         * \exception -
+         * \author    Shadouw
+         ****************************************************************************/
         STRINGTYPE &operator() ( STRINGTYPE strSection, STRINGTYPE strKey )
         {
             return m_mapConfig[strSection][strKey].first;
