@@ -17,7 +17,7 @@ project ( ${projectname}
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.60 REQUIRED COMPONENTS unit_test_framework filesystem)
+find_package(Boost 1.60 REQUIRED COMPONENTS unit_test_framework filesystem system)
 
 # Enable C++11 features on gcc/clang
 if("${CMAKE_CXX_COMPILER_ID}" MATCHES "(GNU|Clang)")
