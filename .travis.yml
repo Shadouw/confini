@@ -1,0 +1,49 @@
+language: cpp
+dist: trusty
+
+before_script:
+#  - sudo apt-get update -qq
+#  - sudo apt-get install libboost-thread-dev libboost-system-dev libboost-test-dev
+#  - sudo add-apt-repository universe
+#  - sudo apt-get update -qq
+#  - sudo apt list libboost*
+#  - sudo apt-get install libboost1.68-dev
+before_install:
+#  - sudo add-apt-repository -y ppa:nschloe/boost-nightly
+#  - sudo add-apt-repository -y ppa:mhier/libboost-latest
+
+install:
+  #- sudo apt-get install libboost1.68
+  #- sudo apt-get install libboost1.68-all-dev
+  # - sudo apt-get install libboost 
+  # - sudo apt-get install libboost1.65-all-dev
+  # - sudo apt-get install libboost-serialization1.60-dev libboost-atomic1.60-dev libboost-chrono1.60-dev libboost-date-time1.60-dev libboost-thread1.60-dev libboost-system1.60-dev libboost-test1.60-dev
+  # - sudo apt-get install libboost1.64-all-dev (also tried)
+  # - sudo apt-cache search libboost
+  # - sudo apt-get install libboost-thread-dev libboost-system-dev libboost-test-dev
+  - sudo wget -O boost_1_65_1.tar.gz http://sourceforge.net/projects/boost/files/boost/1.65.1/boost_1_65_1.tar.gz/download
+  - sudo tar xzvf boost_1_65_1.tar.gz > /dev/null
+  - cd boost_1_65_1/
+  - sudo ./bootstrap.sh --prefix=/usr/local --with-libraries=test,filesystem,system
+  - sudo ./b2 -d0
+  - sudo ./b2 -d0 --with-test --with-filesystem --with-system install 
+  - cd ..
+
+addons:
+  apt:
+    update: true
+    sources:
+      - sourceline: 'ppa:mhier/libboost-latest'
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-5
+      # - boost1.68
+      - doxygen
+      - graphviz
+
+script:
+  - CXX=/usr/bin/g++-5 CC=/usr/bin/gcc-5 cmake -D ENABLE_COVERAGE:BOOL=TRUE . 
+  - cmake --build . -- -j2 
+  - ctest -j2
+  - bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-5
+
