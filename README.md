@@ -25,15 +25,19 @@ Include the header:
     #include <confini.h>
 	
 Open the file:
+
 	ConfIniFile<char> File1("test.ini");
 	
 Access a config entry:
+
 	string strSetting = File1("Section 2", "Key1");
 	
 Change a value:
+
 	File1("Section 2", "Key1") = "My new value";
 	
 Write your configuration back to disk:
+
 	File1.savefile();
 	
 	
