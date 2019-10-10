@@ -4,13 +4,14 @@
 #include <boost/test/unit_test.hpp>
 
 #include <confini.h>
+#include <confinitestfiles.h>
 
 using namespace std;
 using namespace confini;
 
 BOOST_AUTO_TEST_CASE ( ChangeExistingValue )
 {
-    ConfIniFile<char> File1("../../confinilib/test/test.ini");
+    ConfIniFile<char> File1(TESTINI);
 
     // First read it
     BOOST_TEST ( std::string("1234") == File1("Section1", "Key2") );
@@ -23,7 +24,7 @@ BOOST_AUTO_TEST_CASE ( ChangeExistingValue )
 
 BOOST_AUTO_TEST_CASE ( AddNewValue )
 {
-    ConfIniFile<char> File1("../../confinilib/test/test.ini");
+    ConfIniFile<char> File1(TESTINI);
 
     // First read it
     BOOST_TEST ( std::string("") == File1("Section1", "Key3") );
@@ -36,7 +37,7 @@ BOOST_AUTO_TEST_CASE ( AddNewValue )
 
 BOOST_AUTO_TEST_CASE ( AddNewSection )
 {
-    ConfIniFile<char> File1("../../confinilib/test/test.ini");
+    ConfIniFile<char> File1(TESTINI);
 
     // First read it
     BOOST_TEST ( std::string("") == File1("Section-3", "Key1") );
@@ -49,7 +50,7 @@ BOOST_AUTO_TEST_CASE ( AddNewSection )
 
 BOOST_AUTO_TEST_CASE ( RemoveValue )
 {
-    ConfIniFile<char> File1("../../confinilib/test/test.ini");
+    ConfIniFile<char> File1(TESTINI);
 
     // First read it
     BOOST_TEST ( std::string("1234") == File1("Section1", "Key2") );

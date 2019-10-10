@@ -5,14 +5,15 @@
 #include <boost/filesystem.hpp>
 
 #include <confini.h>
+#include <confinitestfiles.h>
 
 using namespace std;
 using namespace confini;
 
 BOOST_AUTO_TEST_CASE ( MakeChanges )
 {
-    boost::filesystem::copy_file("../../confinilib/test/test.ini", "../../confinilib/test/test2.ini", boost::filesystem::copy_option::overwrite_if_exists );
-    ConfIniFile<char> File1("../../confinilib/test/test2.ini");
+    boost::filesystem::copy_file(TESTINI, TEST2INI, boost::filesystem::copy_option::overwrite_if_exists );
+    ConfIniFile<char> File1(TEST2INI);
 
     // Change a value:
     File1("Section1", "Key2") = "Value";
@@ -35,7 +36,7 @@ BOOST_AUTO_TEST_CASE ( MakeChanges )
 
 BOOST_AUTO_TEST_CASE ( TestChanges )
 {
-    ConfIniFile<char> File1("../../confinilib/test/test2.ini");
+    ConfIniFile<char> File1(TEST2INI);
 
     BOOST_TEST ( std::string("Value") == File1("Section1", "Key2") );
     BOOST_TEST ( std::string("NewValue") == File1("Section1", "Key3") );
@@ -49,5 +50,5 @@ BOOST_AUTO_TEST_CASE ( TestChanges )
     BOOST_TEST ( std::string("New Section & Value") == File1("Section-5", "Key3") );
     BOOST_TEST ( std::string("") == File1("Section1", "Key1") );
 
-    boost::filesystem::remove("../../confinilib/test/test2.ini");
+    boost::filesystem::remove(TEST2INI);
 }

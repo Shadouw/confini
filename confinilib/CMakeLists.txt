@@ -34,6 +34,12 @@ configure_file(src/${projectname}.pc.in ${projectname}.pc @ONLY)
 # Test
 #
 
+# Get Path to some test files
+get_filename_component(TESTFOLDER test/ ABSOLUTE DIRECTORY)
+
+configure_file(test/${projectname}testfiles.h.in ${CMAKE_BINARY_DIR}/${projectname}testfiles.h @ONLY)
+
+
 # Add the source files. Avoid file(GLOB SRC_FILES ...)
 add_executable ( ${projectname}_test
                  ../include/confini.h
@@ -46,6 +52,7 @@ add_executable ( ${projectname}_test
 # Add INCLUDE folder
 target_include_directories ( ${projectname}_test PRIVATE ../include )
 target_include_directories ( ${projectname}_test PRIVATE include )
+target_include_directories ( ${projectname}_test PRIVATE ${CMAKE_BINARY_DIR} )
 target_include_directories ( ${projectname}_test PRIVATE ${Boost_INCLUDE_DIRS} )
 
 # Link library

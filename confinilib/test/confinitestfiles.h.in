@@ -1,0 +1,6 @@
+#define TESTINI             "@TESTFOLDER@/test.ini"
+#define TEST2INI            "@TESTFOLDER@/test2.ini"
+#define DUPLICATEKEYINI     "@TESTFOLDER@/DuplicateKey.ini"
+#define DUPLICATESECTIONINI "@TESTFOLDER@/DuplicateSection.ini"
+#define INVALIDLINEINI      "@TESTFOLDER@/InvalidLine.ini"
+#define INVALIDSECTIONINI   "@TESTFOLDER@/InvalidSection.ini"
