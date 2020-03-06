@@ -44,7 +44,7 @@ configure_file(test/${projectname}testfiles.h.in ${CMAKE_BINARY_DIR}/${projectna
 # Add the source files. Avoid file(GLOB SRC_FILES ...)
 add_executable ( ${projectname}_test
                  ../include/confini.h
-                 ../lib/LittleCPPHelper/include/LittleCPPHelper/strings.h
+                 ../lib/LittleCPPHelper/include/LittleCPPHelper/string.hpp
                  test/testmain.cpp
                  test/versiontest.cpp
                  test/readtest.cpp

@@ -3,7 +3,7 @@
 #include <sstream>
 #include <vector>
 
-#include <LittleCPPHelper/strings.h>
+#include <LittleCPPHelper/string.hpp>
 
 #include <confini.h>
 #include <confiniversion.h>
