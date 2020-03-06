@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include <boost/test/unit_test.hpp>
+#include <catch2/catch.hpp>
 
 #include <confini.h>
 #include <confinitestfiles.h>
@@ -9,86 +9,46 @@
 using namespace std;
 using namespace confini;
 
-BOOST_AUTO_TEST_CASE ( ReadStandard )
+TEST_CASE ( "Read Standard", "[ReadStandard]" )
 {
     ConfIniFile<char> File1(TESTINI);
 
-    BOOST_TEST ( std::string("Value1234") == File1("Section1", "Key1") );
-    BOOST_TEST ( std::string("1234") == File1("Section1", "Key2") );
-    BOOST_TEST ( std::string("Never change this!") == File1("Section1", "Key13") );
+    REQUIRE ( std::string("Value1234") == File1("Section1", "Key1") );
+    REQUIRE ( std::string("1234") == File1("Section1", "Key2") );
+    REQUIRE ( std::string("Never change this!") == File1("Section1", "Key13") );
 
-    BOOST_TEST ( std::string("1234Value") == File1("Section 2", "Key1") );
+    REQUIRE ( std::string("1234Value") == File1("Section 2", "Key1") );
 }
 
-BOOST_AUTO_TEST_CASE ( ReadEmpty )
+TEST_CASE ( "Read Empty", "[ReadEmpty]" )
 {
     ConfIniFile<char> File1(TESTINI);
 
-    BOOST_TEST ( std::string("") == File1("Section1", "Key3") );
-    BOOST_TEST ( std::string("") == File1("Section  2", "Key1") );
+    REQUIRE ( std::string("") == File1("Section1", "Key3") );
+    REQUIRE ( std::string("") == File1("Section  2", "Key1") );
 }
 
-BOOST_AUTO_TEST_CASE ( ReadInvalidSection )
+TEST_CASE ( "Read Invalid Section", "[ReadInvalidSection]" )
 {
     ConfIniFile<char> File1;
-    BOOST_REQUIRE_THROW ( File1.setfile(INVALIDSECTIONINI), runtime_error );
-
-    try
-    {
-        File1.setfile(INVALIDSECTIONINI);
-    }
-    catch ( const runtime_error &ex )
-    {
-        BOOST_TEST ( std::string("Invalid Section Line: [Section 2") == ex.what() );
-
-    }
+    REQUIRE_THROWS_MATCHES ( File1.setfile(INVALIDSECTIONINI), runtime_error,  Catch::Message("Invalid Section Line: [Section 2"));
 }
 
-BOOST_AUTO_TEST_CASE ( ReadInvalidLine )
+TEST_CASE ( "Read Invalid Line", "[ReadInvalidLine]" )
 {
     ConfIniFile<char> File1;
-    BOOST_REQUIRE_THROW ( File1.setfile(INVALIDLINEINI), runtime_error );
-
-    try
-    {
-        File1.setfile(INVALIDLINEINI);
-    }
-    catch ( const runtime_error &ex )
-    {
-        BOOST_TEST ( std::string("Invalid Line: Key1-1234Value") == ex.what() );
-
-    }
+    REQUIRE_THROWS_MATCHES ( File1.setfile(INVALIDLINEINI), runtime_error,  Catch::Message("Invalid Line: Key1-1234Value"));
 }
 
-BOOST_AUTO_TEST_CASE ( ReadDuplicateKey )
+TEST_CASE ( "Read Duplicate Key", "[ReadDuplicateKey]" )
 {
     ConfIniFile<char> File1;
-    BOOST_REQUIRE_THROW ( File1.setfile(DUPLICATEKEYINI), runtime_error );
-
-    try
-    {
-        File1.setfile(DUPLICATEKEYINI);
-    }
-    catch ( const runtime_error &ex )
-    {
-        BOOST_TEST ( std::string("Duplicate Key: [Section1] Key1") == ex.what() );
-
-    }
+    REQUIRE_THROWS_MATCHES ( File1.setfile(DUPLICATEKEYINI), runtime_error,  Catch::Message("Duplicate Key: [Section1] Key1"));
 }
 
-BOOST_AUTO_TEST_CASE ( ReadDuplicateSection )
+TEST_CASE ( "Read Duplicate Section", "[ReadDuplicateSection]" )
 {
     ConfIniFile<char> File1;
-    BOOST_REQUIRE_THROW ( File1.setfile(DUPLICATESECTIONINI), runtime_error );
-
-    try
-    {
-        File1.setfile(DUPLICATESECTIONINI);
-    }
-    catch ( const runtime_error &ex )
-    {
-        BOOST_TEST ( std::string("Duplicate Section: [Section1]") == ex.what() );
-
-    }
+    REQUIRE_THROWS_MATCHES ( File1.setfile(DUPLICATESECTIONINI), runtime_error,  Catch::Message("Duplicate Section: [Section1]"));
 }
 

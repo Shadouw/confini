@@ -14,6 +14,8 @@ add_library ( ${projectname} SHARED
 
 # Add INCLUDE folder
 target_include_directories ( ${projectname} PRIVATE ../include )
+target_include_directories ( ${projectname} PRIVATE ../lib )
+target_include_directories ( ${projectname} PRIVATE ../lib/LittleCPPHelper/include )
 target_include_directories ( ${projectname} PRIVATE include )
 target_include_directories ( ${projectname} PRIVATE src )
 target_include_directories ( ${projectname} PRIVATE ${CMAKE_BINARY_DIR} )
@@ -43,6 +45,8 @@ configure_file(test/${projectname}testfiles.h.in ${CMAKE_BINARY_DIR}/${projectna
 # Add the source files. Avoid file(GLOB SRC_FILES ...)
 add_executable ( ${projectname}_test
                  ../include/confini.h
+                 ../lib/LittleCPPHelper/include/LittleCPPHelper/strings.h
+                 test/testmain.cpp
                  test/versiontest.cpp
                  test/readtest.cpp
 				 test/changetest.cpp
@@ -51,6 +55,7 @@ add_executable ( ${projectname}_test
 
 # Add INCLUDE folder
 target_include_directories ( ${projectname}_test PRIVATE ../include )
+target_include_directories ( ${projectname}_test PRIVATE ../lib )
 target_include_directories ( ${projectname}_test PRIVATE include )
 target_include_directories ( ${projectname}_test PRIVATE ${CMAKE_BINARY_DIR} )
 target_include_directories ( ${projectname}_test PRIVATE ${Boost_INCLUDE_DIRS} )

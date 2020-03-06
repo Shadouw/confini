@@ -1,10 +1,9 @@
 #include <confini.h>
-#define BOOST_TEST_MAIN
-#include <boost/test/unit_test.hpp>
+#include <catch2/catch.hpp>
 
-BOOST_AUTO_TEST_CASE ( check_version )
+TEST_CASE ( "Check Version", "[CheckVersion]" )
 {
-    BOOST_REQUIRE_EQUAL ( "0.0.1", confini::version() );
+    REQUIRE ( std::string("0.0.1") == std::string(confini::version()) );
 }
 
 

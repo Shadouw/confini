@@ -3,7 +3,7 @@
 #include <sstream>
 #include <vector>
 
-#include <boost/algorithm/string.hpp>
+#include <LittleCPPHelper/strings.h>
 
 #include <confini.h>
 #include <confiniversion.h>
@@ -52,7 +52,7 @@ template<class T> confini::ConfIniFile<T>::ConfIniFile ( STRINGTYPE filename ) :
  ****************************************************************************/
 template<class T> confini::ConfIniFileLineType confini::ConfIniFile<T>::checkline ( STRINGTYPE strLine )
 {
-    boost::trim(strLine);
+    LittleCPPHelper::trim(strLine);
 
     if ( 0 == strLine.size() )                           // 1) Whitespace only
     {
@@ -98,8 +98,8 @@ template<class T> typename confini::ConfIniFile<T>::VALUETYPE confini::ConfIniFi
     {
         throw runtime_error( "Invalid Line: " + strLine );
     }
-    STRINGTYPE strKey   = boost::trim_copy(strLine.substr(0, nPos));
-    STRINGTYPE strValue = boost::trim_copy(strLine.substr(nPos+1));
+    STRINGTYPE strKey   = LittleCPPHelper::trim_copy(strLine.substr(0, nPos));
+    STRINGTYPE strValue = LittleCPPHelper::trim_copy(strLine.substr(nPos+1));
 
     return make_pair(strKey, strValue);
 }
@@ -130,7 +130,7 @@ template<class T> void confini::ConfIniFile<T>::setfile ( STRINGTYPE filename )
             case COMMENT:
                 break;
             case SECTION:
-                boost::trim(strLine);
+                LittleCPPHelper::trim(strLine);
                 strSection = strLine.substr(1, strLine.size()-2);
 
                 if ( m_mapConfig.end() != m_mapConfig.find(strSection) )
@@ -202,7 +202,7 @@ template<class T> void confini::ConfIniFile<T>::savefile ()
                 }
 
                 outfile << strLine2 << endl;
-                boost::trim(strLine2);
+                LittleCPPHelper::trim(strLine2);
                 strSection = strLine2.substr(1, strLine2.size()-2);
                 break;
             case KEYVALUE:

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include <boost/test/unit_test.hpp>
+#include <catch2/catch.hpp>
 
 #include <confini.h>
 #include <confinitestfiles.h>
@@ -9,54 +9,54 @@
 using namespace std;
 using namespace confini;
 
-BOOST_AUTO_TEST_CASE ( ChangeExistingValue )
+TEST_CASE ( "Change Existing Value", "[ChangeExistingValue]" )
 {
     ConfIniFile<char> File1(TESTINI);
 
     // First read it
-    BOOST_TEST ( std::string("1234") == File1("Section1", "Key2") );
+    REQUIRE ( std::string("1234") == File1("Section1", "Key2") );
 
     // Now Change it
     File1("Section1", "Key2") = "Value";
     // Test again
-    BOOST_TEST ( std::string("Value") == File1("Section1", "Key2") );
+    REQUIRE ( std::string("Value") == File1("Section1", "Key2") );
 }
 
-BOOST_AUTO_TEST_CASE ( AddNewValue )
+TEST_CASE ( "Add New Value", "[AddNewValue]" )
 {
     ConfIniFile<char> File1(TESTINI);
 
     // First read it
-    BOOST_TEST ( std::string("") == File1("Section1", "Key3") );
+    REQUIRE ( std::string("") == File1("Section1", "Key3") );
 
     // Now Change it
     File1("Section1", "Key3") = "NewValue";
     // Test again
-    BOOST_TEST ( std::string("NewValue") == File1("Section1", "Key3") );
+    REQUIRE ( std::string("NewValue") == File1("Section1", "Key3") );
 }
 
-BOOST_AUTO_TEST_CASE ( AddNewSection )
+TEST_CASE ( "Add New Section", "[AddNewSection]" )
 {
     ConfIniFile<char> File1(TESTINI);
 
     // First read it
-    BOOST_TEST ( std::string("") == File1("Section-3", "Key1") );
+    REQUIRE ( std::string("") == File1("Section-3", "Key1") );
 
     // Now Change it
     File1("Section-3", "Key1") = "New Section & Value";
     // Test again
-    BOOST_TEST ( std::string("New Section & Value") == File1("Section-3", "Key1") );
+    REQUIRE ( std::string("New Section & Value") == File1("Section-3", "Key1") );
 }
 
-BOOST_AUTO_TEST_CASE ( RemoveValue )
+TEST_CASE ( "Remove Value", "[RemoveValue]" )
 {
     ConfIniFile<char> File1(TESTINI);
 
     // First read it
-    BOOST_TEST ( std::string("1234") == File1("Section1", "Key2") );
+    REQUIRE ( std::string("1234") == File1("Section1", "Key2") );
 
     // Now Change it
     File1("Section1", "Key2") = "";
     // Test again
-    BOOST_TEST ( std::string("") == File1("Section1", "Key2") );
+    REQUIRE ( std::string("") == File1("Section1", "Key2") );
 }

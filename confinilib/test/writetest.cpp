@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include <boost/test/unit_test.hpp>
+#include <catch2/catch.hpp>
 #include <boost/filesystem.hpp>
 
 #include <confini.h>
@@ -10,7 +10,7 @@
 using namespace std;
 using namespace confini;
 
-BOOST_AUTO_TEST_CASE ( MakeChanges )
+TEST_CASE ( "Make Changes", "[MakeChanges]" )
 {
     boost::filesystem::copy_file(TESTINI, TEST2INI, boost::filesystem::copy_option::overwrite_if_exists );
     ConfIniFile<char> File1(TEST2INI);
@@ -34,21 +34,21 @@ BOOST_AUTO_TEST_CASE ( MakeChanges )
     File1.savefile();
 }
 
-BOOST_AUTO_TEST_CASE ( TestChanges )
+TEST_CASE ( "Test Changes", "[TestChanges]" )
 {
     ConfIniFile<char> File1(TEST2INI);
 
-    BOOST_TEST ( std::string("Value") == File1("Section1", "Key2") );
-    BOOST_TEST ( std::string("NewValue") == File1("Section1", "Key3") );
-    BOOST_TEST ( std::string("Never change this!") == File1("Section1", "Key13") );
-    BOOST_TEST ( std::string("New Section & Value") == File1("Section-3", "Key1") );
-    BOOST_TEST ( std::string("New Section & Value") == File1("Section-4", "Key1") );
-    BOOST_TEST ( std::string("New Section & Value") == File1("Section-4", "Key2") );
-    BOOST_TEST ( std::string("New Section & Value") == File1("Section-4", "Key3") );
-    BOOST_TEST ( std::string("New Section & Value") == File1("Section-5", "Key1") );
-    BOOST_TEST ( std::string("New Section & Value") == File1("Section-5", "Key2") );
-    BOOST_TEST ( std::string("New Section & Value") == File1("Section-5", "Key3") );
-    BOOST_TEST ( std::string("") == File1("Section1", "Key1") );
+    REQUIRE ( std::string("Value") == File1("Section1", "Key2") );
+    REQUIRE ( std::string("NewValue") == File1("Section1", "Key3") );
+    REQUIRE ( std::string("Never change this!") == File1("Section1", "Key13") );
+    REQUIRE ( std::string("New Section & Value") == File1("Section-3", "Key1") );
+    REQUIRE ( std::string("New Section & Value") == File1("Section-4", "Key1") );
+    REQUIRE ( std::string("New Section & Value") == File1("Section-4", "Key2") );
+    REQUIRE ( std::string("New Section & Value") == File1("Section-4", "Key3") );
+    REQUIRE ( std::string("New Section & Value") == File1("Section-5", "Key1") );
+    REQUIRE ( std::string("New Section & Value") == File1("Section-5", "Key2") );
+    REQUIRE ( std::string("New Section & Value") == File1("Section-5", "Key3") );
+    REQUIRE ( std::string("") == File1("Section1", "Key1") );
 
     boost::filesystem::remove(TEST2INI);
 }
