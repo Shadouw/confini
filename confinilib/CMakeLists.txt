@@ -19,7 +19,6 @@ target_include_directories ( ${projectname} PRIVATE ../lib/LittleCPPHelper/inclu
 target_include_directories ( ${projectname} PRIVATE include )
 target_include_directories ( ${projectname} PRIVATE src )
 target_include_directories ( ${projectname} PRIVATE ${CMAKE_BINARY_DIR} )
-target_include_directories ( ${projectname} PRIVATE ${Boost_INCLUDE_DIRS} )
 
 # Link library
 target_link_libraries ( ${projectname} ${CMAKE_EXE_LINKER_FLAGS} )
@@ -58,10 +57,9 @@ target_include_directories ( ${projectname}_test PRIVATE ../include )
 target_include_directories ( ${projectname}_test PRIVATE ../lib )
 target_include_directories ( ${projectname}_test PRIVATE include )
 target_include_directories ( ${projectname}_test PRIVATE ${CMAKE_BINARY_DIR} )
-target_include_directories ( ${projectname}_test PRIVATE ${Boost_INCLUDE_DIRS} )
 
 # Link library
-target_link_libraries ( ${projectname}_test ${projectname} ${Boost_LIBRARIES} ${CMAKE_EXE_LINKER_FLAGS} )
+target_link_libraries ( ${projectname}_test ${projectname} ${CMAKE_EXE_LINKER_FLAGS} )
 
 # Define Tests
 enable_testing()

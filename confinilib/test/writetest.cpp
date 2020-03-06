@@ -1,18 +1,25 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 
 #include <catch2/catch.hpp>
-#include <boost/filesystem.hpp>
 
 #include <confini.h>
 #include <confinitestfiles.h>
+
+#include <stdio.h>
 
 using namespace std;
 using namespace confini;
 
 TEST_CASE ( "Make Changes", "[MakeChanges]" )
 {
-    boost::filesystem::copy_file(TESTINI, TEST2INI, boost::filesystem::copy_option::overwrite_if_exists );
+    std::ifstream src ( TESTINI,  std::ios::binary );
+    std::ofstream out ( TEST2INI, std::ios::binary );
+    out << src.rdbuf();
+    out.close();
+    src.close();
+
     ConfIniFile<char> File1(TEST2INI);
 
     // Change a value:
@@ -50,5 +57,5 @@ TEST_CASE ( "Test Changes", "[TestChanges]" )
     REQUIRE ( std::string("New Section & Value") == File1("Section-5", "Key3") );
     REQUIRE ( std::string("") == File1("Section1", "Key1") );
 
-    boost::filesystem::remove(TEST2INI);
+    remove(TEST2INI);
 }
